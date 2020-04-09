@@ -1,37 +1,37 @@
 import numpy as np
+from sklearn.metrics import confusion_matrix, recall_score, accuracy_score
 
-def split_dialog(dialog):
+def split_dialog(dialogs):
   """Split utterances in a dialog into a set of speaker's utternaces in that dialog.
      See eq (5) in the paper.
   Arg:
-    dialog: dict, for example, utterances of two speakers in dialog_01: 
+    dialogs: dict, for example, utterances of two speakers in dialog_01: 
             {dialog_01: [utt_spk01_1, utt_spk02_1, utt_spk01_2, ...]}.
   Return:
-    spk_dialog: dict, a collection of speakers' utterances in dialogs. for example:
+    spk_dialogs: dict, a collection of speakers' utterances in dialogs. for example:
             {dialog_01_spk01: [utt_spk01_1, utt_spk01_2, ...],
              dialog_01_spk02: [utt_spk02_1, utt_spk02_2, ...]}
   """
 
-  spk_dialog = {}
-  for dialog_id in dialog.keys():
-    spk_dialog[dialog_id+'_M'] = []
-    spk_dialog[dialog_id+'_F'] = []
-    for utt_id in dialog[dialog_id]:
+  spk_dialogs = {}
+  for dialog_id in dialogs.keys():
+    spk_dialogs[dialog_id+'_M'] = []
+    spk_dialogs[dialog_id+'_F'] = []
+    for utt_id in dialogs[dialog_id]:
       if utt_id[-4] == 'M':
-        spk_dialog[dialog_id+'_M'].append(utt_id)
+        spk_dialogs[dialog_id+'_M'].append(utt_id)
       elif utt_id[-4] == 'F':
-        spk_dialog[dialog_id+'_F'].append(utt_id)
+        spk_dialogs[dialog_id+'_F'].append(utt_id)
 
-  print("Average of the number of speaker's utterances:", np.mean([len(i) for i in spk_dialog.values()]))
+  return spk_dialogs
 
-  return spk_dialog
-
-def transition_bias(spk_dialog, emo, val=None):
+def transition_bias(spk_dialogs, emo, val=None):
   """Estimate the transition bias of emotion. See eq (5) in the paper.
   Args:
-    spk_dialog: dict, a collection of speakers' utterances in dialogs. for example:
+    spk_dialogs: dict, a collection of speakers' utterances in dialogs. for example:
     emo: dict, map from utt_id to emotion state.
-    val: str, validation session. If given, calculate the trainsition bias except dialogs in the validation session.
+    val: str, validation session. If given, calculate the trainsition bias except 
+         dialogs in the validation session. For example, 'Ses01'.
 
   Returns: 
     bias: p_0 in eq (4).
@@ -40,7 +40,7 @@ def transition_bias(spk_dialog, emo, val=None):
   total_transit = 0
   count = 0
   num = 0
-  for dialog_id in spk_dialog.values():
+  for dialog_id in spk_dialogs.values():
     if val and val == dialog_id[0][:5]:
       continue
 
@@ -52,11 +52,42 @@ def transition_bias(spk_dialog, emo, val=None):
 
   return bias, total_transit
 
+def get_val_bias(dialog, emo_dict):
+    """Get p_0 estimated from training sessions."""
+
+    session = ['Ses01', 'Ses02', 'Ses03', 'Ses04', 'Ses05']
+    bias_dict = {}
+    for i in range(len(session)):
+      val = session[i]
+      train_sessions = session[:i] + session[i+1:]
+      p_0, _ = transition_bias(dialog, emo_dict, val)
+      print("Transition bias of { %s }: %.3f" % (' ,'.join(train_sessions), p_0))
+      bias_dict[val] = p_0
+
+    return bias_dict
+
 def find_last_idx(trace_speakers, speaker):
   """Find the index of speaker's last utterance."""
   for i in range(len(trace_speakers)):
     if trace_speakers[len(trace_speakers) - (i+1)] == speaker:
         return len(trace_speakers) - (i+1)
+
+def convert_to_index(emotion):
+  """convert emotion to index """
+  map_emo = {'ang':0, 'hap':1, 'neu':2, 'sad':3}
+  if emotion in map_emo.keys():
+    return map_emo[emotion]
+  else:
+    return -1
+
+def evaluate(trace, label):
+  # Only evaluate utterances labeled in defined 4 emotion states
+  label, trace = np.array(label), np.array(trace)
+  index = [label != -1]
+  label, trace = label[index], trace[index]
+
+  return recall_score(label, trace, average='macro'), accuracy_score(label, trace), confusion_matrix(label, trace)
+
 
 if __name__ == '__main__':
     dialog = {'Ses05M_script03_2_M': ['Ses05M_script03_2_M042', 'Ses05M_script03_2_M043', 
@@ -68,3 +99,4 @@ if __name__ == '__main__':
     bias, total_transit = transition_bias(spk_dialog, emo)
     crp_alpha = 1
     print('Transition bias: {} , Total transition: {}'.format(bias, total_transit))
+

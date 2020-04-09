@@ -36,16 +36,18 @@ class BeamState(object):
 
 class BeamSearch(object):
 
-  def __init__(self, bias, crp_alpha, emo, logits):
-      self.emo = emo
-      self.all_logits = logits
-      self.transition_bias = bias
-      self.crp_alpha = 1
-      self.test_iteration = 2
-      self.beam_size = 10
-      self.num_state = 4
-      self.ce_loss()
-      self.sess = tf.Session()
+  def __init__(self, bias, crp_alpha, num_state, beam_size, test_iteration, emo, logits):
+    # Define parameters
+    self.transition_bias = bias
+    self.crp_alpha = crp_alpha
+    self.num_state = num_state
+    self.beam_size = beam_size
+    self.test_iteration = test_iteration
+    self.emo = emo
+    self.all_logits = logits
+    # Define cross entropy loss
+    self.ce_loss()
+    self.sess = tf.Session()
 
   def ce_loss(self):
     self.logit = tf.placeholder(dtype=tf.float32, shape=[4,])
