@@ -12,7 +12,7 @@ The definitions of the args are described in ded/arguments.py. You can modify al
 
 ## Usage
 
-```python
+```bash
 python3 main.py --verbosity 1
 ```
 
