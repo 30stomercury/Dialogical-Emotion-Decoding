@@ -4,8 +4,11 @@ This is an implementation of Dialogical Emotion Decoder presented in this year I
 evaluate the effectiveness of DED.
 
 ## Overview
+	
+<p align="center">
+  <img src="img/ded.png" width="450" height="400">
+</p>
 
-![1](img/ded.png)	
 
 ## Arguments
 The definitions of the args are described in ded/arguments.py. You can modify all args there.
