@@ -1,4 +1,3 @@
-import tensorflow as tf
 import numpy as np
 from ded import utils
 
@@ -45,19 +44,6 @@ class BeamSearch(object):
     self.test_iteration = test_iteration
     self.emo = emo
     self.all_logits = logits
-    # Define cross entropy loss
-    self.ce_loss()
-    self.sess = tf.Session()
-
-  def ce_loss(self):
-    self.logit = tf.placeholder(dtype=tf.float32, shape=[4,])
-    self.label = tf.placeholder(dtype=tf.float32, shape=[4,])
-    self.loss = tf.losses.softmax_cross_entropy(
-                    onehot_labels=self.label, logits=self.logit)
-
-  def get_loss(self, gt, logits):
-    fd = {self.label: gt, self.logit: logits}
-    return self.sess.run(self.loss, fd)
 
   def decode(self, dialog):
     """
@@ -112,7 +98,7 @@ class BeamSearch(object):
 
     # Get original ce loss
     logit = np.reshape(self.all_logits[utt_id], [4,])
-    loss = self.get_loss(label, logit)
+    loss = utils.cross_entropy(label, logit)
 
     # RESCORING:
 

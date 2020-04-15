@@ -15,7 +15,17 @@ evaluate the effectiveness of DED.
 + To test on your own emotion classifier, replace `data/outputs.pkl` with your own outputs.
 	+ Dict, {utt_id: logit}
 
+## Requirements
+
+```bash
+pip3 install virtualenv
+virtualenv --python=python3 venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+```
+
 ## Arguments
+
 The definitions of the args are described in `ded/arguments.py`. You can modify all args there.
 
 ## Usage
