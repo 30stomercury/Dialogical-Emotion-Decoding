@@ -72,6 +72,20 @@ def find_last_idx(trace_speakers, speaker):
     if trace_speakers[len(trace_speakers) - (i+1)] == speaker:
         return len(trace_speakers) - (i+1)
 
+def cross_entropy(targets, predictions, epsilon=1e-12):
+  """Computes cross entropy between targets (one-hot) and predictions. 
+  Args: 
+    targets: (1, num_state) ndarray.   
+    predictions: (1, num_state) ndarray.
+
+  Returns: 
+    cross entropy loss.
+  """
+  targets = np.array(targets)
+  predictions = np.array(predictions)
+  ce = -np.sum(targets*predictions)
+  return ce
+
 def convert_to_index(emotion):
   """convert emotion to index """
   map_emo = {'ang':0, 'hap':1, 'neu':2, 'sad':3}

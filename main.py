@@ -1,9 +1,3 @@
-# Supress warning
-import warnings
-warnings.filterwarnings('ignore',category=FutureWarning)
-from tensorflow.python.util import deprecation
-deprecation._PRINT_DEPRECATION_WARNINGS = False
-
 from ded import beam_search as bs
 from ded.arguments import parse_args
 from ded import utils
