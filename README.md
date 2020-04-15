@@ -6,17 +6,22 @@ evaluate the effectiveness of DED.
 ## Overview
 	
 <p align="center">
-  <img src="img/ded.png" width="450" height="400">
+  <img src="img/ded.png" width="500" height="400">
 </p>
 
 
+## Note
++ The performance is **better** than shown in the paper because I found a little bug in recoring part.
++ To test on your own emotion classifier, replace `data/outputs.pkl` with your own outputs.
+	+ Dict, {utt_id: logit}
+
 ## Arguments
-The definitions of the args are described in ded/arguments.py. You can modify all args there.
+The definitions of the args are described in `ded/arguments.py`. You can modify all args there.
 
 ## Usage
 
 ```bash
-python3 main.py --verbosity 1
+python3 main.py --verbosity 1 --result_file RESULT_FILE
 ```
 
 

@@ -46,6 +46,10 @@ def parse_args():
                         type=str, 
                         default='./outputs', 
                         help='Output directory.')
+    parser.add_argument('--result_file', 
+                        type=str, 
+                        default='results', 
+                        help='Save results.')
     args = parser.parse_args()
 
     return args

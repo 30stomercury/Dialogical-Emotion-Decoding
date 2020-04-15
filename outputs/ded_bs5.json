@@ -1,0 +1,1 @@
+{"beam_size": 5, "crp_alpha": 1, "transition_bias": -1, "num_state": 4, "test_iteration": 2, "verbosity": 0, "out_dir": "./outputs", "result_file": "ded_bs5", "uar": 0.710238791254613, "acc": 0.6948110649068885, "conf": "[[ 802   54  194   53]\n [  63 1128  281  164]\n [ 121  301 1010  276]\n [  23   62   96  903]]"}

@@ -35,7 +35,7 @@ def main():
 
   # Split dialogs by speakers
   spk_dialogs = utils.split_dialog(dialogs)
-  logging.info("Average of the number of speaker's utterances per dialog: %.3f" % np.mean(
+  logging.info("Average number of speaker's utterances per dialog: %.3f" % np.mean(
                                                     [len(i) for i in spk_dialogs.values()]))
 
 
@@ -96,9 +96,10 @@ def main():
   # Save results
   results['uar'] = uar
   results['acc'] = acc
+  results['conf'] = str(conf)
   logging.info('Save results:')
   logging.info('\n%s\n', json.dumps(results, sort_keys=False, indent=4))
-  json.dump(results, open(args.out_dir+'/results.json', "w"))
+  json.dump(results, open(args.out_dir+'/%s.json' % args.result_file, "w"))
 
 
 if __name__ == '__main__':
