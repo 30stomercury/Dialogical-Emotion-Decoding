@@ -13,7 +13,7 @@ evaluate the effectiveness of DED.
 ## Note
 + The performance is **better** than shown in the paper because I found a little bug in the rescoring part.
 + To test on your own emotion classifier, replace `data/outputs.pkl` with your own outputs.
-	+ Dict, {utt_id: logit}
+	+ Dict, {utt_id: logit} where utt_id is the utterance name in [IEMOCAP](https://sail.usc.edu/iemocap/release_form.php).
 
 ## Requirements
 
@@ -23,6 +23,10 @@ virtualenv --python=python3 venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 ```
+
+## Dataset
+
+Currently this repo only supports [IEMOCAP](https://sail.usc.edu/iemocap/release_form.php).
 
 ## Arguments
 
