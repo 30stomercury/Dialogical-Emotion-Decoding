@@ -11,7 +11,7 @@ evaluate the effectiveness of DED.
 
 
 ## Note
-+ The performance is **better** than shown in the paper because I found a little bug in recoring part.
++ The performance is **better** than shown in the paper because I found a little bug in the rescoring part.
 + To test on your own emotion classifier, replace `data/outputs.pkl` with your own outputs.
 	+ Dict, {utt_id: logit}
 
