@@ -46,3 +46,6 @@ Results of DED with beam size = 5.
 |:-----:|:-----:|:-----:|
 | Pretrained Classifier | 0.671  | 0.653  |
 | DED | 0.710  | 0.695  |
+
+## Oral Presentation
+[![IMAGE ALT TEXT](img/ICASSP20.png)](https://www.youtube.com/watch?v=Ti4foNyrvzo)
