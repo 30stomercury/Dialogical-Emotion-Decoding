@@ -35,7 +35,7 @@ The definitions of the args are described in `ded/arguments.py`. You can modify 
 ## Usage
 
 ```bash
-python3 main.py --verbosity 1 --result_file RESULT_FILE
+python3 main.py --verbosity 1 --result_file RESULT_FILE.json
 ```
 
 
